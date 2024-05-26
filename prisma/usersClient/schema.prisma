@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./usersClient"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("USERS_DATABASE_URL")
+}
+
+model Users {
+  userId    Int      @id @default(autoincrement()) @map("userId")
+  idname    String   @unique @map("idname")
+  password  String   @map("password")
+  name      String   @map("name")
+  createdAt DateTime @default(now()) @map("createdAt")
+  updatedAt DateTime @updatedAt @map("updatedAt")
+
+  Characters Characters[]
+
+  @@map("Users")
+}
+
+model Characters {
+  characterId Int      @id @default(autoincrement()) @map("characterId")
+  name        String   @unique @map("name")
+  UserId      Int      @map("userId")
+  health      Int?     @default(500) @map("health")
+  power       Int?     @default(100) @map("power")
+  money       Int?     @default(10000) @map("money")
+  createdAt   DateTime @default(now()) @map("createdAt")
+  updatedAt   DateTime @updatedAt @map("updatedAt")
+
+  User                 Users                 @relation(fields: [UserId], references: [userId], onDelete: Cascade)
+  Characterinventories Characterinventories?
+  EquippedItems        EquippedItems[]
+
+  @@map("Characters")
+}
+
+model Characterinventories {
+  inventoryId Int      @id @default(autoincrement()) @map("inventoryId")
+  CharacterId Int      @unique @map("CharacterId")
+  createdAt   DateTime @default(now()) @map("createdAt")
+  updatedAt   DateTime @updatedAt @map("updatedAt")
+
+  Character     Characters      @relation(fields: [CharacterId], references: [characterId], onDelete: Cascade)
+  EquippedItems EquippedItems[]
+
+  @@map("Characterinventories")
+}
+
+model EquippedItems {
+  equippedItemId Int      @id @default(autoincrement()) @map("equippedItemId")
+  CharacterId    Int      @map("CharacterId")
+  InventoryId    Int      @map("InventoryId")
+  createdAt      DateTime @default(now()) @map("createdAt")
+  updatedAt      DateTime @updatedAt @map("updatedAt")
+
+  Character          Characters           @relation(fields: [CharacterId], references: [characterId], onDelete: Cascade)
+  Characterinventory Characterinventories @relation(fields: [InventoryId], references: [inventoryId], onDelete: Cascade)
+
+  @@map("EquippedItems")
+}
