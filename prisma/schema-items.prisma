@@ -9,10 +9,27 @@ datasource db {
 }
 
 model Items {
-  itemId     Int       @id @default(autoincrement()) @map("itemId")
-  itemName   String    @unique @map("itemName")
-  createdAt  DateTime  @default(now()) @map("createdAt")
-  updatedAt  DateTime  @updatedAt @map("updatedAt")
+  itemId       String     @id @default(uuid()) @map("itemId")
+  itemCode     Int        @unique @map("itemCode")
+  itemName     String     @unique @map("itemName")
+  itemPrice    Int        @map("itemPrice")
+  createdAt    DateTime   @default(now()) @map("createdAt")
+  updatedAt    DateTime   @updatedAt @map("updatedAt")
+
+  ItemStat     ItemStat?
 
   @@map("Items")
+}
+
+model ItemStat {
+  itemStatId   String      @id @default(uuid()) @map("itemStatId")
+  ItemCode     Int         @unique @map("ItemCode")
+  health       Int?        @map("health")
+  power        Int?        @map("power")
+  createdAt    DateTime    @default(now()) @map("createdAt")
+  updatedAt    DateTime    @updatedAt @map("updatedAt")
+
+  Item         Items       @relation(fields: [ItemCode], references: [itemCode], onDelete: Cascade)
+
+  @@map("ItemStat")
 }

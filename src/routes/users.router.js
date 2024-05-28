@@ -2,8 +2,6 @@ import express from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { usersprisma } from '../utils/prisma/usersIndex.js';
-import authMiddleware from '../middlewares/auth.middleware.js';
-import { Prisma } from '../../prisma/usersClient/index.js';
 
 const router = express.Router();
 
@@ -41,28 +39,17 @@ router.post('/sign-up', async (req, res, next) => {
         .json({ message: '비밀번호와 비밀번호 확인이 일치하지 않습니다.' });
     }
 
-    // 사용자 비밀번호를 암호화합니다.
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // MySQL과 연결된 Prisma 클라이언트를 통해 트랜잭션을 실행합니다.
-    const user = await usersprisma.$transaction(
-      async (tx) => {
-        // 트랜잭션 내부에서 사용자를 생성합니다.
-        const user = await tx.users.create({
-          data: {
-            idname,
-            password: hashedPassword, // 암호화된 비밀번호를 저장합니다.
-            name,
-          },
-        });
-
-        // 콜백 함수의 리턴값으로 사용자와 사용자 정보를 반환합니다.
-        return user;
+    const user = await usersprisma.users.create({
+      data: {
+        idname,
+        password: hashedPassword,
+        name,
       },
-      {
-        isolationLevel: Prisma.TransactionIsolationLevel.ReadCommitted,
-      }
-    );
+    });
+
     return res.status(201).json({ message: '회원가입이 완료되었습니다.' });
   } catch (err) {
     next(err);
@@ -107,10 +94,10 @@ router.post('/sign-in', async (req, res, next) => {
       { expiresIn: '1h' }
     );
 
-    res.cookie('authorization', `Bearer ${accessToken}`);
+    res.setHeader('authorization', `Bearer ${accessToken}`);
     return res.status(200).json({ message: '로그인 성공' });
   } catch (error) {
-    next(error); // 에러를 next로 전달하여 글로벌 에러 핸들러에서 처리
+    next(error);
   }
 });
 

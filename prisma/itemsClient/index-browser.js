@@ -121,7 +121,18 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.ItemsScalarFieldEnum = {
   itemId: 'itemId',
+  itemCode: 'itemCode',
   itemName: 'itemName',
+  itemPrice: 'itemPrice',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ItemStatScalarFieldEnum = {
+  itemStatId: 'itemStatId',
+  ItemCode: 'ItemCode',
+  health: 'health',
+  power: 'power',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -131,9 +142,15 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
-  Items: 'Items'
+  Items: 'Items',
+  ItemStat: 'ItemStat'
 };
 
 /**

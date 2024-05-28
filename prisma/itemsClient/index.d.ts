@@ -18,6 +18,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  * 
  */
 export type Items = $Result.DefaultSelection<Prisma.$ItemsPayload>
+/**
+ * Model ItemStat
+ * 
+ */
+export type ItemStat = $Result.DefaultSelection<Prisma.$ItemStatPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -150,6 +155,16 @@ export class PrismaClient<
     * ```
     */
   get items(): Prisma.ItemsDelegate<ExtArgs>;
+
+  /**
+   * `prisma.itemStat`: Exposes CRUD operations for the **ItemStat** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ItemStats
+    * const itemStats = await prisma.itemStat.findMany()
+    * ```
+    */
+  get itemStat(): Prisma.ItemStatDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -627,7 +642,8 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    Items: 'Items'
+    Items: 'Items',
+    ItemStat: 'ItemStat'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -644,7 +660,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meta: {
-      modelProps: 'items'
+      modelProps: 'items' | 'itemStat'
       txIsolationLevel: Prisma.TransactionIsolationLevel
     },
     model: {
@@ -711,6 +727,72 @@ export namespace Prisma {
           count: {
             args: Prisma.ItemsCountArgs<ExtArgs>,
             result: $Utils.Optional<ItemsCountAggregateOutputType> | number
+          }
+        }
+      }
+      ItemStat: {
+        payload: Prisma.$ItemStatPayload<ExtArgs>
+        fields: Prisma.ItemStatFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ItemStatFindUniqueArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ItemStatPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ItemStatFindUniqueOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ItemStatPayload>
+          }
+          findFirst: {
+            args: Prisma.ItemStatFindFirstArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ItemStatPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ItemStatFindFirstOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ItemStatPayload>
+          }
+          findMany: {
+            args: Prisma.ItemStatFindManyArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ItemStatPayload>[]
+          }
+          create: {
+            args: Prisma.ItemStatCreateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ItemStatPayload>
+          }
+          createMany: {
+            args: Prisma.ItemStatCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          delete: {
+            args: Prisma.ItemStatDeleteArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ItemStatPayload>
+          }
+          update: {
+            args: Prisma.ItemStatUpdateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ItemStatPayload>
+          }
+          deleteMany: {
+            args: Prisma.ItemStatDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ItemStatUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          upsert: {
+            args: Prisma.ItemStatUpsertArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ItemStatPayload>
+          }
+          aggregate: {
+            args: Prisma.ItemStatAggregateArgs<ExtArgs>,
+            result: $Utils.Optional<AggregateItemStat>
+          }
+          groupBy: {
+            args: Prisma.ItemStatGroupByArgs<ExtArgs>,
+            result: $Utils.Optional<ItemStatGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ItemStatCountArgs<ExtArgs>,
+            result: $Utils.Optional<ItemStatCountAggregateOutputType> | number
           }
         }
       }
@@ -887,30 +969,38 @@ export namespace Prisma {
   }
 
   export type ItemsAvgAggregateOutputType = {
-    itemId: number | null
+    itemCode: number | null
+    itemPrice: number | null
   }
 
   export type ItemsSumAggregateOutputType = {
-    itemId: number | null
+    itemCode: number | null
+    itemPrice: number | null
   }
 
   export type ItemsMinAggregateOutputType = {
-    itemId: number | null
+    itemId: string | null
+    itemCode: number | null
     itemName: string | null
+    itemPrice: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type ItemsMaxAggregateOutputType = {
-    itemId: number | null
+    itemId: string | null
+    itemCode: number | null
     itemName: string | null
+    itemPrice: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type ItemsCountAggregateOutputType = {
     itemId: number
+    itemCode: number
     itemName: number
+    itemPrice: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -918,30 +1008,38 @@ export namespace Prisma {
 
 
   export type ItemsAvgAggregateInputType = {
-    itemId?: true
+    itemCode?: true
+    itemPrice?: true
   }
 
   export type ItemsSumAggregateInputType = {
-    itemId?: true
+    itemCode?: true
+    itemPrice?: true
   }
 
   export type ItemsMinAggregateInputType = {
     itemId?: true
+    itemCode?: true
     itemName?: true
+    itemPrice?: true
     createdAt?: true
     updatedAt?: true
   }
 
   export type ItemsMaxAggregateInputType = {
     itemId?: true
+    itemCode?: true
     itemName?: true
+    itemPrice?: true
     createdAt?: true
     updatedAt?: true
   }
 
   export type ItemsCountAggregateInputType = {
     itemId?: true
+    itemCode?: true
     itemName?: true
+    itemPrice?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1034,8 +1132,10 @@ export namespace Prisma {
   }
 
   export type ItemsGroupByOutputType = {
-    itemId: number
+    itemId: string
+    itemCode: number
     itemName: string
+    itemPrice: number
     createdAt: Date
     updatedAt: Date
     _count: ItemsCountAggregateOutputType | null
@@ -1061,26 +1161,39 @@ export namespace Prisma {
 
   export type ItemsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     itemId?: boolean
+    itemCode?: boolean
     itemName?: boolean
+    itemPrice?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    ItemStat?: boolean | Items$ItemStatArgs<ExtArgs>
   }, ExtArgs["result"]["items"]>
 
   export type ItemsSelectScalar = {
     itemId?: boolean
+    itemCode?: boolean
     itemName?: boolean
+    itemPrice?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
 
+  export type ItemsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    ItemStat?: boolean | Items$ItemStatArgs<ExtArgs>
+  }
+
 
   export type $ItemsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Items"
-    objects: {}
+    objects: {
+      ItemStat: Prisma.$ItemStatPayload<ExtArgs> | null
+    }
     scalars: $Extensions.GetPayloadResult<{
-      itemId: number
+      itemId: string
+      itemCode: number
       itemName: string
+      itemPrice: number
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["items"]>
@@ -1448,6 +1561,7 @@ export namespace Prisma {
   export interface Prisma__ItemsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
+    ItemStat<T extends Items$ItemStatArgs<ExtArgs> = {}>(args?: Subset<T, Items$ItemStatArgs<ExtArgs>>): Prisma__ItemStatClient<$Result.GetResult<Prisma.$ItemStatPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1477,8 +1591,10 @@ export namespace Prisma {
    * Fields of the Items model
    */ 
   interface ItemsFieldRefs {
-    readonly itemId: FieldRef<"Items", 'Int'>
+    readonly itemId: FieldRef<"Items", 'String'>
+    readonly itemCode: FieldRef<"Items", 'Int'>
     readonly itemName: FieldRef<"Items", 'String'>
+    readonly itemPrice: FieldRef<"Items", 'Int'>
     readonly createdAt: FieldRef<"Items", 'DateTime'>
     readonly updatedAt: FieldRef<"Items", 'DateTime'>
   }
@@ -1494,6 +1610,10 @@ export namespace Prisma {
      */
     select?: ItemsSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ItemsInclude<ExtArgs> | null
+    /**
      * Filter, which Items to fetch.
      */
     where: ItemsWhereUniqueInput
@@ -1508,6 +1628,10 @@ export namespace Prisma {
      */
     select?: ItemsSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ItemsInclude<ExtArgs> | null
+    /**
      * Filter, which Items to fetch.
      */
     where: ItemsWhereUniqueInput
@@ -1521,6 +1645,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Items
      */
     select?: ItemsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ItemsInclude<ExtArgs> | null
     /**
      * Filter, which Items to fetch.
      */
@@ -1566,6 +1694,10 @@ export namespace Prisma {
      */
     select?: ItemsSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ItemsInclude<ExtArgs> | null
+    /**
      * Filter, which Items to fetch.
      */
     where?: ItemsWhereInput
@@ -1610,6 +1742,10 @@ export namespace Prisma {
      */
     select?: ItemsSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ItemsInclude<ExtArgs> | null
+    /**
      * Filter, which Items to fetch.
      */
     where?: ItemsWhereInput
@@ -1649,6 +1785,10 @@ export namespace Prisma {
      */
     select?: ItemsSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ItemsInclude<ExtArgs> | null
+    /**
      * The data needed to create a Items.
      */
     data: XOR<ItemsCreateInput, ItemsUncheckedCreateInput>
@@ -1673,6 +1813,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Items
      */
     select?: ItemsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ItemsInclude<ExtArgs> | null
     /**
      * The data needed to update a Items.
      */
@@ -1706,6 +1850,10 @@ export namespace Prisma {
      */
     select?: ItemsSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ItemsInclude<ExtArgs> | null
+    /**
      * The filter to search for the Items to update in case it exists.
      */
     where: ItemsWhereUniqueInput
@@ -1728,6 +1876,10 @@ export namespace Prisma {
      */
     select?: ItemsSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ItemsInclude<ExtArgs> | null
+    /**
      * Filter which Items to delete.
      */
     where: ItemsWhereUniqueInput
@@ -1744,6 +1896,21 @@ export namespace Prisma {
   }
 
   /**
+   * Items.ItemStat
+   */
+  export type Items$ItemStatArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ItemStat
+     */
+    select?: ItemStatSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ItemStatInclude<ExtArgs> | null
+    where?: ItemStatWhereInput
+  }
+
+  /**
    * Items without action
    */
   export type ItemsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1751,6 +1918,968 @@ export namespace Prisma {
      * Select specific fields to fetch from the Items
      */
     select?: ItemsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ItemsInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ItemStat
+   */
+
+  export type AggregateItemStat = {
+    _count: ItemStatCountAggregateOutputType | null
+    _avg: ItemStatAvgAggregateOutputType | null
+    _sum: ItemStatSumAggregateOutputType | null
+    _min: ItemStatMinAggregateOutputType | null
+    _max: ItemStatMaxAggregateOutputType | null
+  }
+
+  export type ItemStatAvgAggregateOutputType = {
+    ItemCode: number | null
+    health: number | null
+    power: number | null
+  }
+
+  export type ItemStatSumAggregateOutputType = {
+    ItemCode: number | null
+    health: number | null
+    power: number | null
+  }
+
+  export type ItemStatMinAggregateOutputType = {
+    itemStatId: string | null
+    ItemCode: number | null
+    health: number | null
+    power: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ItemStatMaxAggregateOutputType = {
+    itemStatId: string | null
+    ItemCode: number | null
+    health: number | null
+    power: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ItemStatCountAggregateOutputType = {
+    itemStatId: number
+    ItemCode: number
+    health: number
+    power: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ItemStatAvgAggregateInputType = {
+    ItemCode?: true
+    health?: true
+    power?: true
+  }
+
+  export type ItemStatSumAggregateInputType = {
+    ItemCode?: true
+    health?: true
+    power?: true
+  }
+
+  export type ItemStatMinAggregateInputType = {
+    itemStatId?: true
+    ItemCode?: true
+    health?: true
+    power?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ItemStatMaxAggregateInputType = {
+    itemStatId?: true
+    ItemCode?: true
+    health?: true
+    power?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ItemStatCountAggregateInputType = {
+    itemStatId?: true
+    ItemCode?: true
+    health?: true
+    power?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ItemStatAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ItemStat to aggregate.
+     */
+    where?: ItemStatWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ItemStats to fetch.
+     */
+    orderBy?: ItemStatOrderByWithRelationInput | ItemStatOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ItemStatWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ItemStats from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ItemStats.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ItemStats
+    **/
+    _count?: true | ItemStatCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ItemStatAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ItemStatSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ItemStatMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ItemStatMaxAggregateInputType
+  }
+
+  export type GetItemStatAggregateType<T extends ItemStatAggregateArgs> = {
+        [P in keyof T & keyof AggregateItemStat]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateItemStat[P]>
+      : GetScalarType<T[P], AggregateItemStat[P]>
+  }
+
+
+
+
+  export type ItemStatGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ItemStatWhereInput
+    orderBy?: ItemStatOrderByWithAggregationInput | ItemStatOrderByWithAggregationInput[]
+    by: ItemStatScalarFieldEnum[] | ItemStatScalarFieldEnum
+    having?: ItemStatScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ItemStatCountAggregateInputType | true
+    _avg?: ItemStatAvgAggregateInputType
+    _sum?: ItemStatSumAggregateInputType
+    _min?: ItemStatMinAggregateInputType
+    _max?: ItemStatMaxAggregateInputType
+  }
+
+  export type ItemStatGroupByOutputType = {
+    itemStatId: string
+    ItemCode: number
+    health: number | null
+    power: number | null
+    createdAt: Date
+    updatedAt: Date
+    _count: ItemStatCountAggregateOutputType | null
+    _avg: ItemStatAvgAggregateOutputType | null
+    _sum: ItemStatSumAggregateOutputType | null
+    _min: ItemStatMinAggregateOutputType | null
+    _max: ItemStatMaxAggregateOutputType | null
+  }
+
+  type GetItemStatGroupByPayload<T extends ItemStatGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ItemStatGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ItemStatGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ItemStatGroupByOutputType[P]>
+            : GetScalarType<T[P], ItemStatGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ItemStatSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    itemStatId?: boolean
+    ItemCode?: boolean
+    health?: boolean
+    power?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    Item?: boolean | ItemsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["itemStat"]>
+
+  export type ItemStatSelectScalar = {
+    itemStatId?: boolean
+    ItemCode?: boolean
+    health?: boolean
+    power?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type ItemStatInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Item?: boolean | ItemsDefaultArgs<ExtArgs>
+  }
+
+
+  export type $ItemStatPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ItemStat"
+    objects: {
+      Item: Prisma.$ItemsPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      itemStatId: string
+      ItemCode: number
+      health: number | null
+      power: number | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["itemStat"]>
+    composites: {}
+  }
+
+
+  type ItemStatGetPayload<S extends boolean | null | undefined | ItemStatDefaultArgs> = $Result.GetResult<Prisma.$ItemStatPayload, S>
+
+  type ItemStatCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ItemStatFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ItemStatCountAggregateInputType | true
+    }
+
+  export interface ItemStatDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ItemStat'], meta: { name: 'ItemStat' } }
+    /**
+     * Find zero or one ItemStat that matches the filter.
+     * @param {ItemStatFindUniqueArgs} args - Arguments to find a ItemStat
+     * @example
+     * // Get one ItemStat
+     * const itemStat = await prisma.itemStat.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends ItemStatFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, ItemStatFindUniqueArgs<ExtArgs>>
+    ): Prisma__ItemStatClient<$Result.GetResult<Prisma.$ItemStatPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+
+    /**
+     * Find one ItemStat that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ItemStatFindUniqueOrThrowArgs} args - Arguments to find a ItemStat
+     * @example
+     * // Get one ItemStat
+     * const itemStat = await prisma.itemStat.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends ItemStatFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, ItemStatFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__ItemStatClient<$Result.GetResult<Prisma.$ItemStatPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find the first ItemStat that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ItemStatFindFirstArgs} args - Arguments to find a ItemStat
+     * @example
+     * // Get one ItemStat
+     * const itemStat = await prisma.itemStat.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends ItemStatFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, ItemStatFindFirstArgs<ExtArgs>>
+    ): Prisma__ItemStatClient<$Result.GetResult<Prisma.$ItemStatPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+
+    /**
+     * Find the first ItemStat that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ItemStatFindFirstOrThrowArgs} args - Arguments to find a ItemStat
+     * @example
+     * // Get one ItemStat
+     * const itemStat = await prisma.itemStat.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends ItemStatFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, ItemStatFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__ItemStatClient<$Result.GetResult<Prisma.$ItemStatPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find zero or more ItemStats that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ItemStatFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ItemStats
+     * const itemStats = await prisma.itemStat.findMany()
+     * 
+     * // Get first 10 ItemStats
+     * const itemStats = await prisma.itemStat.findMany({ take: 10 })
+     * 
+     * // Only select the `itemStatId`
+     * const itemStatWithItemStatIdOnly = await prisma.itemStat.findMany({ select: { itemStatId: true } })
+     * 
+    **/
+    findMany<T extends ItemStatFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, ItemStatFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ItemStatPayload<ExtArgs>, T, 'findMany'>>
+
+    /**
+     * Create a ItemStat.
+     * @param {ItemStatCreateArgs} args - Arguments to create a ItemStat.
+     * @example
+     * // Create one ItemStat
+     * const ItemStat = await prisma.itemStat.create({
+     *   data: {
+     *     // ... data to create a ItemStat
+     *   }
+     * })
+     * 
+    **/
+    create<T extends ItemStatCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, ItemStatCreateArgs<ExtArgs>>
+    ): Prisma__ItemStatClient<$Result.GetResult<Prisma.$ItemStatPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Create many ItemStats.
+     * @param {ItemStatCreateManyArgs} args - Arguments to create many ItemStats.
+     * @example
+     * // Create many ItemStats
+     * const itemStat = await prisma.itemStat.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+    **/
+    createMany<T extends ItemStatCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, ItemStatCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a ItemStat.
+     * @param {ItemStatDeleteArgs} args - Arguments to delete one ItemStat.
+     * @example
+     * // Delete one ItemStat
+     * const ItemStat = await prisma.itemStat.delete({
+     *   where: {
+     *     // ... filter to delete one ItemStat
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends ItemStatDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, ItemStatDeleteArgs<ExtArgs>>
+    ): Prisma__ItemStatClient<$Result.GetResult<Prisma.$ItemStatPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+
+    /**
+     * Update one ItemStat.
+     * @param {ItemStatUpdateArgs} args - Arguments to update one ItemStat.
+     * @example
+     * // Update one ItemStat
+     * const itemStat = await prisma.itemStat.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends ItemStatUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, ItemStatUpdateArgs<ExtArgs>>
+    ): Prisma__ItemStatClient<$Result.GetResult<Prisma.$ItemStatPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+
+    /**
+     * Delete zero or more ItemStats.
+     * @param {ItemStatDeleteManyArgs} args - Arguments to filter ItemStats to delete.
+     * @example
+     * // Delete a few ItemStats
+     * const { count } = await prisma.itemStat.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends ItemStatDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, ItemStatDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ItemStats.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ItemStatUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ItemStats
+     * const itemStat = await prisma.itemStat.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends ItemStatUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, ItemStatUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ItemStat.
+     * @param {ItemStatUpsertArgs} args - Arguments to update or create a ItemStat.
+     * @example
+     * // Update or create a ItemStat
+     * const itemStat = await prisma.itemStat.upsert({
+     *   create: {
+     *     // ... data to create a ItemStat
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ItemStat we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends ItemStatUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, ItemStatUpsertArgs<ExtArgs>>
+    ): Prisma__ItemStatClient<$Result.GetResult<Prisma.$ItemStatPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+
+    /**
+     * Count the number of ItemStats.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ItemStatCountArgs} args - Arguments to filter ItemStats to count.
+     * @example
+     * // Count the number of ItemStats
+     * const count = await prisma.itemStat.count({
+     *   where: {
+     *     // ... the filter for the ItemStats we want to count
+     *   }
+     * })
+    **/
+    count<T extends ItemStatCountArgs>(
+      args?: Subset<T, ItemStatCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ItemStatCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ItemStat.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ItemStatAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ItemStatAggregateArgs>(args: Subset<T, ItemStatAggregateArgs>): Prisma.PrismaPromise<GetItemStatAggregateType<T>>
+
+    /**
+     * Group by ItemStat.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ItemStatGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ItemStatGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ItemStatGroupByArgs['orderBy'] }
+        : { orderBy?: ItemStatGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ItemStatGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetItemStatGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ItemStat model
+   */
+  readonly fields: ItemStatFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ItemStat.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ItemStatClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+    Item<T extends ItemsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ItemsDefaultArgs<ExtArgs>>): Prisma__ItemsClient<$Result.GetResult<Prisma.$ItemsPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+
+
+  /**
+   * Fields of the ItemStat model
+   */ 
+  interface ItemStatFieldRefs {
+    readonly itemStatId: FieldRef<"ItemStat", 'String'>
+    readonly ItemCode: FieldRef<"ItemStat", 'Int'>
+    readonly health: FieldRef<"ItemStat", 'Int'>
+    readonly power: FieldRef<"ItemStat", 'Int'>
+    readonly createdAt: FieldRef<"ItemStat", 'DateTime'>
+    readonly updatedAt: FieldRef<"ItemStat", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ItemStat findUnique
+   */
+  export type ItemStatFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ItemStat
+     */
+    select?: ItemStatSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ItemStatInclude<ExtArgs> | null
+    /**
+     * Filter, which ItemStat to fetch.
+     */
+    where: ItemStatWhereUniqueInput
+  }
+
+  /**
+   * ItemStat findUniqueOrThrow
+   */
+  export type ItemStatFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ItemStat
+     */
+    select?: ItemStatSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ItemStatInclude<ExtArgs> | null
+    /**
+     * Filter, which ItemStat to fetch.
+     */
+    where: ItemStatWhereUniqueInput
+  }
+
+  /**
+   * ItemStat findFirst
+   */
+  export type ItemStatFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ItemStat
+     */
+    select?: ItemStatSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ItemStatInclude<ExtArgs> | null
+    /**
+     * Filter, which ItemStat to fetch.
+     */
+    where?: ItemStatWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ItemStats to fetch.
+     */
+    orderBy?: ItemStatOrderByWithRelationInput | ItemStatOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ItemStats.
+     */
+    cursor?: ItemStatWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ItemStats from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ItemStats.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ItemStats.
+     */
+    distinct?: ItemStatScalarFieldEnum | ItemStatScalarFieldEnum[]
+  }
+
+  /**
+   * ItemStat findFirstOrThrow
+   */
+  export type ItemStatFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ItemStat
+     */
+    select?: ItemStatSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ItemStatInclude<ExtArgs> | null
+    /**
+     * Filter, which ItemStat to fetch.
+     */
+    where?: ItemStatWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ItemStats to fetch.
+     */
+    orderBy?: ItemStatOrderByWithRelationInput | ItemStatOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ItemStats.
+     */
+    cursor?: ItemStatWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ItemStats from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ItemStats.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ItemStats.
+     */
+    distinct?: ItemStatScalarFieldEnum | ItemStatScalarFieldEnum[]
+  }
+
+  /**
+   * ItemStat findMany
+   */
+  export type ItemStatFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ItemStat
+     */
+    select?: ItemStatSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ItemStatInclude<ExtArgs> | null
+    /**
+     * Filter, which ItemStats to fetch.
+     */
+    where?: ItemStatWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ItemStats to fetch.
+     */
+    orderBy?: ItemStatOrderByWithRelationInput | ItemStatOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ItemStats.
+     */
+    cursor?: ItemStatWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ItemStats from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ItemStats.
+     */
+    skip?: number
+    distinct?: ItemStatScalarFieldEnum | ItemStatScalarFieldEnum[]
+  }
+
+  /**
+   * ItemStat create
+   */
+  export type ItemStatCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ItemStat
+     */
+    select?: ItemStatSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ItemStatInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ItemStat.
+     */
+    data: XOR<ItemStatCreateInput, ItemStatUncheckedCreateInput>
+  }
+
+  /**
+   * ItemStat createMany
+   */
+  export type ItemStatCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ItemStats.
+     */
+    data: ItemStatCreateManyInput | ItemStatCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ItemStat update
+   */
+  export type ItemStatUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ItemStat
+     */
+    select?: ItemStatSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ItemStatInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ItemStat.
+     */
+    data: XOR<ItemStatUpdateInput, ItemStatUncheckedUpdateInput>
+    /**
+     * Choose, which ItemStat to update.
+     */
+    where: ItemStatWhereUniqueInput
+  }
+
+  /**
+   * ItemStat updateMany
+   */
+  export type ItemStatUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ItemStats.
+     */
+    data: XOR<ItemStatUpdateManyMutationInput, ItemStatUncheckedUpdateManyInput>
+    /**
+     * Filter which ItemStats to update
+     */
+    where?: ItemStatWhereInput
+  }
+
+  /**
+   * ItemStat upsert
+   */
+  export type ItemStatUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ItemStat
+     */
+    select?: ItemStatSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ItemStatInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ItemStat to update in case it exists.
+     */
+    where: ItemStatWhereUniqueInput
+    /**
+     * In case the ItemStat found by the `where` argument doesn't exist, create a new ItemStat with this data.
+     */
+    create: XOR<ItemStatCreateInput, ItemStatUncheckedCreateInput>
+    /**
+     * In case the ItemStat was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ItemStatUpdateInput, ItemStatUncheckedUpdateInput>
+  }
+
+  /**
+   * ItemStat delete
+   */
+  export type ItemStatDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ItemStat
+     */
+    select?: ItemStatSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ItemStatInclude<ExtArgs> | null
+    /**
+     * Filter which ItemStat to delete.
+     */
+    where: ItemStatWhereUniqueInput
+  }
+
+  /**
+   * ItemStat deleteMany
+   */
+  export type ItemStatDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ItemStats to delete
+     */
+    where?: ItemStatWhereInput
+  }
+
+  /**
+   * ItemStat without action
+   */
+  export type ItemStatDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ItemStat
+     */
+    select?: ItemStatSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ItemStatInclude<ExtArgs> | null
   }
 
 
@@ -1770,12 +2899,26 @@ export namespace Prisma {
 
   export const ItemsScalarFieldEnum: {
     itemId: 'itemId',
+    itemCode: 'itemCode',
     itemName: 'itemName',
+    itemPrice: 'itemPrice',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
   export type ItemsScalarFieldEnum = (typeof ItemsScalarFieldEnum)[keyof typeof ItemsScalarFieldEnum]
+
+
+  export const ItemStatScalarFieldEnum: {
+    itemStatId: 'itemStatId',
+    ItemCode: 'ItemCode',
+    health: 'health',
+    power: 'power',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ItemStatScalarFieldEnum = (typeof ItemStatScalarFieldEnum)[keyof typeof ItemStatScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -1786,22 +2929,30 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
   /**
    * Field references 
    */
 
 
   /**
-   * Reference to a field of type 'Int'
+   * Reference to a field of type 'String'
    */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+  export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
     
 
 
   /**
-   * Reference to a field of type 'String'
+   * Reference to a field of type 'Int'
    */
-  export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
     
 
 
@@ -1826,32 +2977,43 @@ export namespace Prisma {
     AND?: ItemsWhereInput | ItemsWhereInput[]
     OR?: ItemsWhereInput[]
     NOT?: ItemsWhereInput | ItemsWhereInput[]
-    itemId?: IntFilter<"Items"> | number
+    itemId?: StringFilter<"Items"> | string
+    itemCode?: IntFilter<"Items"> | number
     itemName?: StringFilter<"Items"> | string
+    itemPrice?: IntFilter<"Items"> | number
     createdAt?: DateTimeFilter<"Items"> | Date | string
     updatedAt?: DateTimeFilter<"Items"> | Date | string
+    ItemStat?: XOR<ItemStatNullableRelationFilter, ItemStatWhereInput> | null
   }
 
   export type ItemsOrderByWithRelationInput = {
     itemId?: SortOrder
+    itemCode?: SortOrder
     itemName?: SortOrder
+    itemPrice?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    ItemStat?: ItemStatOrderByWithRelationInput
   }
 
   export type ItemsWhereUniqueInput = Prisma.AtLeast<{
-    itemId?: number
+    itemId?: string
+    itemCode?: number
     itemName?: string
     AND?: ItemsWhereInput | ItemsWhereInput[]
     OR?: ItemsWhereInput[]
     NOT?: ItemsWhereInput | ItemsWhereInput[]
+    itemPrice?: IntFilter<"Items"> | number
     createdAt?: DateTimeFilter<"Items"> | Date | string
     updatedAt?: DateTimeFilter<"Items"> | Date | string
-  }, "itemId" | "itemName">
+    ItemStat?: XOR<ItemStatNullableRelationFilter, ItemStatWhereInput> | null
+  }, "itemId" | "itemCode" | "itemName">
 
   export type ItemsOrderByWithAggregationInput = {
     itemId?: SortOrder
+    itemCode?: SortOrder
     itemName?: SortOrder
+    itemPrice?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ItemsCountOrderByAggregateInput
@@ -1865,67 +3027,203 @@ export namespace Prisma {
     AND?: ItemsScalarWhereWithAggregatesInput | ItemsScalarWhereWithAggregatesInput[]
     OR?: ItemsScalarWhereWithAggregatesInput[]
     NOT?: ItemsScalarWhereWithAggregatesInput | ItemsScalarWhereWithAggregatesInput[]
-    itemId?: IntWithAggregatesFilter<"Items"> | number
+    itemId?: StringWithAggregatesFilter<"Items"> | string
+    itemCode?: IntWithAggregatesFilter<"Items"> | number
     itemName?: StringWithAggregatesFilter<"Items"> | string
+    itemPrice?: IntWithAggregatesFilter<"Items"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Items"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Items"> | Date | string
   }
 
+  export type ItemStatWhereInput = {
+    AND?: ItemStatWhereInput | ItemStatWhereInput[]
+    OR?: ItemStatWhereInput[]
+    NOT?: ItemStatWhereInput | ItemStatWhereInput[]
+    itemStatId?: StringFilter<"ItemStat"> | string
+    ItemCode?: IntFilter<"ItemStat"> | number
+    health?: IntNullableFilter<"ItemStat"> | number | null
+    power?: IntNullableFilter<"ItemStat"> | number | null
+    createdAt?: DateTimeFilter<"ItemStat"> | Date | string
+    updatedAt?: DateTimeFilter<"ItemStat"> | Date | string
+    Item?: XOR<ItemsRelationFilter, ItemsWhereInput>
+  }
+
+  export type ItemStatOrderByWithRelationInput = {
+    itemStatId?: SortOrder
+    ItemCode?: SortOrder
+    health?: SortOrderInput | SortOrder
+    power?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    Item?: ItemsOrderByWithRelationInput
+  }
+
+  export type ItemStatWhereUniqueInput = Prisma.AtLeast<{
+    itemStatId?: string
+    ItemCode?: number
+    AND?: ItemStatWhereInput | ItemStatWhereInput[]
+    OR?: ItemStatWhereInput[]
+    NOT?: ItemStatWhereInput | ItemStatWhereInput[]
+    health?: IntNullableFilter<"ItemStat"> | number | null
+    power?: IntNullableFilter<"ItemStat"> | number | null
+    createdAt?: DateTimeFilter<"ItemStat"> | Date | string
+    updatedAt?: DateTimeFilter<"ItemStat"> | Date | string
+    Item?: XOR<ItemsRelationFilter, ItemsWhereInput>
+  }, "itemStatId" | "ItemCode">
+
+  export type ItemStatOrderByWithAggregationInput = {
+    itemStatId?: SortOrder
+    ItemCode?: SortOrder
+    health?: SortOrderInput | SortOrder
+    power?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ItemStatCountOrderByAggregateInput
+    _avg?: ItemStatAvgOrderByAggregateInput
+    _max?: ItemStatMaxOrderByAggregateInput
+    _min?: ItemStatMinOrderByAggregateInput
+    _sum?: ItemStatSumOrderByAggregateInput
+  }
+
+  export type ItemStatScalarWhereWithAggregatesInput = {
+    AND?: ItemStatScalarWhereWithAggregatesInput | ItemStatScalarWhereWithAggregatesInput[]
+    OR?: ItemStatScalarWhereWithAggregatesInput[]
+    NOT?: ItemStatScalarWhereWithAggregatesInput | ItemStatScalarWhereWithAggregatesInput[]
+    itemStatId?: StringWithAggregatesFilter<"ItemStat"> | string
+    ItemCode?: IntWithAggregatesFilter<"ItemStat"> | number
+    health?: IntNullableWithAggregatesFilter<"ItemStat"> | number | null
+    power?: IntNullableWithAggregatesFilter<"ItemStat"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"ItemStat"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ItemStat"> | Date | string
+  }
+
   export type ItemsCreateInput = {
+    itemId?: string
+    itemCode: number
     itemName: string
+    itemPrice: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    ItemStat?: ItemStatCreateNestedOneWithoutItemInput
   }
 
   export type ItemsUncheckedCreateInput = {
-    itemId?: number
+    itemId?: string
+    itemCode: number
     itemName: string
+    itemPrice: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    ItemStat?: ItemStatUncheckedCreateNestedOneWithoutItemInput
   }
 
   export type ItemsUpdateInput = {
+    itemId?: StringFieldUpdateOperationsInput | string
+    itemCode?: IntFieldUpdateOperationsInput | number
     itemName?: StringFieldUpdateOperationsInput | string
+    itemPrice?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ItemStat?: ItemStatUpdateOneWithoutItemNestedInput
   }
 
   export type ItemsUncheckedUpdateInput = {
-    itemId?: IntFieldUpdateOperationsInput | number
+    itemId?: StringFieldUpdateOperationsInput | string
+    itemCode?: IntFieldUpdateOperationsInput | number
     itemName?: StringFieldUpdateOperationsInput | string
+    itemPrice?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ItemStat?: ItemStatUncheckedUpdateOneWithoutItemNestedInput
   }
 
   export type ItemsCreateManyInput = {
-    itemId?: number
+    itemId?: string
+    itemCode: number
     itemName: string
+    itemPrice: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type ItemsUpdateManyMutationInput = {
+    itemId?: StringFieldUpdateOperationsInput | string
+    itemCode?: IntFieldUpdateOperationsInput | number
     itemName?: StringFieldUpdateOperationsInput | string
+    itemPrice?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ItemsUncheckedUpdateManyInput = {
-    itemId?: IntFieldUpdateOperationsInput | number
+    itemId?: StringFieldUpdateOperationsInput | string
+    itemCode?: IntFieldUpdateOperationsInput | number
     itemName?: StringFieldUpdateOperationsInput | string
+    itemPrice?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
+  export type ItemStatCreateInput = {
+    itemStatId?: string
+    health?: number | null
+    power?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Item: ItemsCreateNestedOneWithoutItemStatInput
+  }
+
+  export type ItemStatUncheckedCreateInput = {
+    itemStatId?: string
+    ItemCode: number
+    health?: number | null
+    power?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ItemStatUpdateInput = {
+    itemStatId?: StringFieldUpdateOperationsInput | string
+    health?: NullableIntFieldUpdateOperationsInput | number | null
+    power?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Item?: ItemsUpdateOneRequiredWithoutItemStatNestedInput
+  }
+
+  export type ItemStatUncheckedUpdateInput = {
+    itemStatId?: StringFieldUpdateOperationsInput | string
+    ItemCode?: IntFieldUpdateOperationsInput | number
+    health?: NullableIntFieldUpdateOperationsInput | number | null
+    power?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ItemStatCreateManyInput = {
+    itemStatId?: string
+    ItemCode: number
+    health?: number | null
+    power?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ItemStatUpdateManyMutationInput = {
+    itemStatId?: StringFieldUpdateOperationsInput | string
+    health?: NullableIntFieldUpdateOperationsInput | number | null
+    power?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ItemStatUncheckedUpdateManyInput = {
+    itemStatId?: StringFieldUpdateOperationsInput | string
+    ItemCode?: IntFieldUpdateOperationsInput | number
+    health?: NullableIntFieldUpdateOperationsInput | number | null
+    power?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -1942,6 +3240,17 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
@@ -1953,49 +3262,46 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type ItemStatNullableRelationFilter = {
+    is?: ItemStatWhereInput | null
+    isNot?: ItemStatWhereInput | null
+  }
+
   export type ItemsCountOrderByAggregateInput = {
     itemId?: SortOrder
+    itemCode?: SortOrder
     itemName?: SortOrder
+    itemPrice?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type ItemsAvgOrderByAggregateInput = {
-    itemId?: SortOrder
+    itemCode?: SortOrder
+    itemPrice?: SortOrder
   }
 
   export type ItemsMaxOrderByAggregateInput = {
     itemId?: SortOrder
+    itemCode?: SortOrder
     itemName?: SortOrder
+    itemPrice?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type ItemsMinOrderByAggregateInput = {
     itemId?: SortOrder
+    itemCode?: SortOrder
     itemName?: SortOrder
+    itemPrice?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type ItemsSumOrderByAggregateInput = {
-    itemId?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
+    itemCode?: SortOrder
+    itemPrice?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -2015,6 +3321,22 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
@@ -2029,12 +3351,96 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type StringFieldUpdateOperationsInput = {
-    set?: string
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
+  export type ItemsRelationFilter = {
+    is?: ItemsWhereInput
+    isNot?: ItemsWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type ItemStatCountOrderByAggregateInput = {
+    itemStatId?: SortOrder
+    ItemCode?: SortOrder
+    health?: SortOrder
+    power?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ItemStatAvgOrderByAggregateInput = {
+    ItemCode?: SortOrder
+    health?: SortOrder
+    power?: SortOrder
+  }
+
+  export type ItemStatMaxOrderByAggregateInput = {
+    itemStatId?: SortOrder
+    ItemCode?: SortOrder
+    health?: SortOrder
+    power?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ItemStatMinOrderByAggregateInput = {
+    itemStatId?: SortOrder
+    ItemCode?: SortOrder
+    health?: SortOrder
+    power?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ItemStatSumOrderByAggregateInput = {
+    ItemCode?: SortOrder
+    health?: SortOrder
+    power?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type ItemStatCreateNestedOneWithoutItemInput = {
+    create?: XOR<ItemStatCreateWithoutItemInput, ItemStatUncheckedCreateWithoutItemInput>
+    connectOrCreate?: ItemStatCreateOrConnectWithoutItemInput
+    connect?: ItemStatWhereUniqueInput
+  }
+
+  export type ItemStatUncheckedCreateNestedOneWithoutItemInput = {
+    create?: XOR<ItemStatCreateWithoutItemInput, ItemStatUncheckedCreateWithoutItemInput>
+    connectOrCreate?: ItemStatCreateOrConnectWithoutItemInput
+    connect?: ItemStatWhereUniqueInput
+  }
+
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -2045,15 +3451,50 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type ItemStatUpdateOneWithoutItemNestedInput = {
+    create?: XOR<ItemStatCreateWithoutItemInput, ItemStatUncheckedCreateWithoutItemInput>
+    connectOrCreate?: ItemStatCreateOrConnectWithoutItemInput
+    upsert?: ItemStatUpsertWithoutItemInput
+    disconnect?: ItemStatWhereInput | boolean
+    delete?: ItemStatWhereInput | boolean
+    connect?: ItemStatWhereUniqueInput
+    update?: XOR<XOR<ItemStatUpdateToOneWithWhereWithoutItemInput, ItemStatUpdateWithoutItemInput>, ItemStatUncheckedUpdateWithoutItemInput>
+  }
+
+  export type ItemStatUncheckedUpdateOneWithoutItemNestedInput = {
+    create?: XOR<ItemStatCreateWithoutItemInput, ItemStatUncheckedCreateWithoutItemInput>
+    connectOrCreate?: ItemStatCreateOrConnectWithoutItemInput
+    upsert?: ItemStatUpsertWithoutItemInput
+    disconnect?: ItemStatWhereInput | boolean
+    delete?: ItemStatWhereInput | boolean
+    connect?: ItemStatWhereUniqueInput
+    update?: XOR<XOR<ItemStatUpdateToOneWithWhereWithoutItemInput, ItemStatUpdateWithoutItemInput>, ItemStatUncheckedUpdateWithoutItemInput>
+  }
+
+  export type ItemsCreateNestedOneWithoutItemStatInput = {
+    create?: XOR<ItemsCreateWithoutItemStatInput, ItemsUncheckedCreateWithoutItemStatInput>
+    connectOrCreate?: ItemsCreateOrConnectWithoutItemStatInput
+    connect?: ItemsWhereUniqueInput
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type ItemsUpdateOneRequiredWithoutItemStatNestedInput = {
+    create?: XOR<ItemsCreateWithoutItemStatInput, ItemsUncheckedCreateWithoutItemStatInput>
+    connectOrCreate?: ItemsCreateOrConnectWithoutItemStatInput
+    upsert?: ItemsUpsertWithoutItemStatInput
+    connect?: ItemsWhereUniqueInput
+    update?: XOR<XOR<ItemsUpdateToOneWithWhereWithoutItemStatInput, ItemsUpdateWithoutItemStatInput>, ItemsUncheckedUpdateWithoutItemStatInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -2070,6 +3511,17 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
@@ -2079,6 +3531,23 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -2108,23 +3577,6 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[]
-    notIn?: string[]
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
-  }
-
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
@@ -2139,6 +3591,144 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type ItemStatCreateWithoutItemInput = {
+    itemStatId?: string
+    health?: number | null
+    power?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ItemStatUncheckedCreateWithoutItemInput = {
+    itemStatId?: string
+    health?: number | null
+    power?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ItemStatCreateOrConnectWithoutItemInput = {
+    where: ItemStatWhereUniqueInput
+    create: XOR<ItemStatCreateWithoutItemInput, ItemStatUncheckedCreateWithoutItemInput>
+  }
+
+  export type ItemStatUpsertWithoutItemInput = {
+    update: XOR<ItemStatUpdateWithoutItemInput, ItemStatUncheckedUpdateWithoutItemInput>
+    create: XOR<ItemStatCreateWithoutItemInput, ItemStatUncheckedCreateWithoutItemInput>
+    where?: ItemStatWhereInput
+  }
+
+  export type ItemStatUpdateToOneWithWhereWithoutItemInput = {
+    where?: ItemStatWhereInput
+    data: XOR<ItemStatUpdateWithoutItemInput, ItemStatUncheckedUpdateWithoutItemInput>
+  }
+
+  export type ItemStatUpdateWithoutItemInput = {
+    itemStatId?: StringFieldUpdateOperationsInput | string
+    health?: NullableIntFieldUpdateOperationsInput | number | null
+    power?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ItemStatUncheckedUpdateWithoutItemInput = {
+    itemStatId?: StringFieldUpdateOperationsInput | string
+    health?: NullableIntFieldUpdateOperationsInput | number | null
+    power?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ItemsCreateWithoutItemStatInput = {
+    itemId?: string
+    itemCode: number
+    itemName: string
+    itemPrice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ItemsUncheckedCreateWithoutItemStatInput = {
+    itemId?: string
+    itemCode: number
+    itemName: string
+    itemPrice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ItemsCreateOrConnectWithoutItemStatInput = {
+    where: ItemsWhereUniqueInput
+    create: XOR<ItemsCreateWithoutItemStatInput, ItemsUncheckedCreateWithoutItemStatInput>
+  }
+
+  export type ItemsUpsertWithoutItemStatInput = {
+    update: XOR<ItemsUpdateWithoutItemStatInput, ItemsUncheckedUpdateWithoutItemStatInput>
+    create: XOR<ItemsCreateWithoutItemStatInput, ItemsUncheckedCreateWithoutItemStatInput>
+    where?: ItemsWhereInput
+  }
+
+  export type ItemsUpdateToOneWithWhereWithoutItemStatInput = {
+    where?: ItemsWhereInput
+    data: XOR<ItemsUpdateWithoutItemStatInput, ItemsUncheckedUpdateWithoutItemStatInput>
+  }
+
+  export type ItemsUpdateWithoutItemStatInput = {
+    itemId?: StringFieldUpdateOperationsInput | string
+    itemCode?: IntFieldUpdateOperationsInput | number
+    itemName?: StringFieldUpdateOperationsInput | string
+    itemPrice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ItemsUncheckedUpdateWithoutItemStatInput = {
+    itemId?: StringFieldUpdateOperationsInput | string
+    itemCode?: IntFieldUpdateOperationsInput | number
+    itemName?: StringFieldUpdateOperationsInput | string
+    itemPrice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
 
 
   /**
@@ -2148,6 +3738,10 @@ export namespace Prisma {
      * @deprecated Use ItemsDefaultArgs instead
      */
     export type ItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ItemsDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ItemStatDefaultArgs instead
+     */
+    export type ItemStatArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ItemStatDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

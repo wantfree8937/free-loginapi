@@ -9,7 +9,7 @@ datasource db {
 }
 
 model Users {
-  userId    Int      @id @default(autoincrement()) @map("userId")
+  userId    String   @id @default(uuid()) @map("userId")
   idname    String   @unique @map("idname")
   password  String   @map("password")
   name      String   @map("name")
@@ -22,43 +22,45 @@ model Users {
 }
 
 model Characters {
-  characterId Int      @id @default(autoincrement()) @map("characterId")
+  characterId String   @id @default(uuid()) @map("characterId")
   name        String   @unique @map("name")
-  UserId      Int      @map("userId")
+  UserId      String   @map("UserId")
   health      Int?     @default(500) @map("health")
   power       Int?     @default(100) @map("power")
   money       Int?     @default(10000) @map("money")
   createdAt   DateTime @default(now()) @map("createdAt")
   updatedAt   DateTime @updatedAt @map("updatedAt")
 
-  User                 Users                 @relation(fields: [UserId], references: [userId], onDelete: Cascade)
-  Characterinventories Characterinventories?
-  EquippedItems        EquippedItems[]
+  User           Users            @relation(fields: [UserId], references: [userId], onDelete: Cascade)
+  CharacterInven CharacterInven[]
+  EquippedItems  EquippedItems[]
 
   @@map("Characters")
 }
 
-model Characterinventories {
-  inventoryId Int      @id @default(autoincrement()) @map("inventoryId")
-  CharacterId Int      @unique @map("CharacterId")
+model CharacterInven {
+  inventoryId String   @id @default(uuid()) @map("inventoryId")
+  CharacterId String   @map("CharacterId")
+  Name        String   @map("Name")
+  ItemCode    Int?     @default(0) @map("ItemCode")
+  count       Int?     @default(0) @map("count")
   createdAt   DateTime @default(now()) @map("createdAt")
   updatedAt   DateTime @updatedAt @map("updatedAt")
 
-  Character     Characters      @relation(fields: [CharacterId], references: [characterId], onDelete: Cascade)
-  EquippedItems EquippedItems[]
+  Character Characters @relation(fields: [CharacterId], references: [characterId], onDelete: Cascade)
 
-  @@map("Characterinventories")
+  @@map("CharacterInven")
 }
 
 model EquippedItems {
-  equippedItemId Int      @id @default(autoincrement()) @map("equippedItemId")
-  CharacterId    Int      @map("CharacterId")
-  InventoryId    Int      @map("InventoryId")
+  equippedItemId String   @id @default(uuid()) @map("equippedItemId")
+  CharacterId    String   @map("CharacterId")
+  Name           String   @map("Name")
+  ItemCode       Int?     @default(0) @map("ItemCode")
   createdAt      DateTime @default(now()) @map("createdAt")
   updatedAt      DateTime @updatedAt @map("updatedAt")
 
-  Character          Characters           @relation(fields: [CharacterId], references: [characterId], onDelete: Cascade)
-  Characterinventory Characterinventories @relation(fields: [InventoryId], references: [inventoryId], onDelete: Cascade)
+  Character Characters @relation(fields: [CharacterId], references: [characterId], onDelete: Cascade)
 
   @@map("EquippedItems")
 }

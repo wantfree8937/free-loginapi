@@ -139,9 +139,12 @@ exports.Prisma.CharactersScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.CharacterinventoriesScalarFieldEnum = {
+exports.Prisma.CharacterInvenScalarFieldEnum = {
   inventoryId: 'inventoryId',
   CharacterId: 'CharacterId',
+  Name: 'Name',
+  ItemCode: 'ItemCode',
+  count: 'count',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -149,7 +152,8 @@ exports.Prisma.CharacterinventoriesScalarFieldEnum = {
 exports.Prisma.EquippedItemsScalarFieldEnum = {
   equippedItemId: 'equippedItemId',
   CharacterId: 'CharacterId',
-  InventoryId: 'InventoryId',
+  Name: 'Name',
+  ItemCode: 'ItemCode',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -168,7 +172,7 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.ModelName = {
   Users: 'Users',
   Characters: 'Characters',
-  Characterinventories: 'Characterinventories',
+  CharacterInven: 'CharacterInven',
   EquippedItems: 'EquippedItems'
 };
 
