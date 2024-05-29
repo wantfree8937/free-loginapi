@@ -142,6 +142,10 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -166,8 +170,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"./itemsClient\"\n}\n\ndatasource db {\n  provider = \"mysql\"\n  url      = env(\"ITEMS_DATABASE_URL\")\n}\n\nmodel Items {\n  itemId    String   @id @default(uuid()) @map(\"itemId\")\n  itemCode  Int      @unique @map(\"itemCode\")\n  itemName  String   @unique @map(\"itemName\")\n  itemPrice Int      @map(\"itemPrice\")\n  createdAt DateTime @default(now()) @map(\"createdAt\")\n  updatedAt DateTime @updatedAt @map(\"updatedAt\")\n\n  ItemStat ItemStat?\n\n  @@map(\"Items\")\n}\n\nmodel ItemStat {\n  itemStatId String   @id @default(uuid()) @map(\"itemStatId\")\n  ItemCode   Int      @unique @map(\"ItemCode\")\n  health     Int?     @map(\"health\")\n  power      Int?     @map(\"power\")\n  createdAt  DateTime @default(now()) @map(\"createdAt\")\n  updatedAt  DateTime @updatedAt @map(\"updatedAt\")\n\n  Item Items @relation(fields: [ItemCode], references: [itemCode], onDelete: Cascade)\n\n  @@map(\"ItemStat\")\n}\n",
-  "inlineSchemaHash": "14ef5d7eaff0c9595654be2a592df4741f3ab32092fa971eb222faaabd05b994",
+  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  output        = \"./itemsClient\"\n  binaryTargets = [\"native\", \"debian-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"mysql\"\n  url      = env(\"ITEMS_DATABASE_URL\")\n}\n\nmodel Items {\n  itemId    String   @id @default(uuid()) @map(\"itemId\")\n  itemCode  Int      @unique @map(\"itemCode\")\n  itemName  String   @unique @map(\"itemName\")\n  itemPrice Int      @map(\"itemPrice\")\n  createdAt DateTime @default(now()) @map(\"createdAt\")\n  updatedAt DateTime @updatedAt @map(\"updatedAt\")\n\n  ItemStat ItemStat?\n\n  @@map(\"Items\")\n}\n\nmodel ItemStat {\n  itemStatId String   @id @default(uuid()) @map(\"itemStatId\")\n  ItemCode   Int      @unique @map(\"ItemCode\")\n  health     Int?     @map(\"health\")\n  power      Int?     @map(\"power\")\n  createdAt  DateTime @default(now()) @map(\"createdAt\")\n  updatedAt  DateTime @updatedAt @map(\"updatedAt\")\n\n  Item Items @relation(fields: [ItemCode], references: [itemCode], onDelete: Cascade)\n\n  @@map(\"ItemStat\")\n}\n",
+  "inlineSchemaHash": "cecce5da2c77f8193c4f09377d197d30def85f9dbc58436e8f23252c453ecb2d",
   "copyEngine": true
 }
 config.dirname = '/'
